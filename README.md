@@ -22,8 +22,10 @@ togo install togo-framework/db-mongodb
 
 # db-mongodb
 
-togo's **MongoDB** driver plugin. Connects a `*mongo.Client` from `DATABASE_URL`
-during boot and exposes it via `dbmongo.Client()`.
+togo's **MongoDB** driver plugin. Connects a `*mongo.Client` from `MONGODB_URL` (or `DATABASE_URL`)
+during boot and exposes it via `dbmongo.Client()`. Only a `mongodb://` or
+`mongodb+srv://` URL is dialled, so next to a Postgres/MySQL `DATABASE_URL` the
+plugin stays idle until you set `MONGODB_URL`.
 
 > MongoDB is a document store, not a SQL backend. togo's ORM (sqlc + Atlas +
 > `togo make:resource`) still targets Postgres/MySQL/SQLite — this plugin adds a
@@ -38,6 +40,8 @@ togo install togo-framework/db-mongodb
 ```
 DB_DRIVER=mongodb
 DATABASE_URL=mongodb://user:pass@localhost:27017/my-app
+# or, alongside a SQL DATABASE_URL:
+MONGODB_URL=mongodb://user:pass@localhost:27017/my-app
 ```
 
 ```go
